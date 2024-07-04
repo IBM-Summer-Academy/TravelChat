@@ -25,7 +25,7 @@ namespace TravelChat.Server.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                return NoContent();
+                return BadRequest();
             }
 
             ChatResponse response = chatService.GetResponse(chatPrompt);
