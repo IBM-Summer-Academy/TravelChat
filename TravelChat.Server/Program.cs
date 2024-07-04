@@ -1,3 +1,6 @@
+using TravelChat.Server.Controllers;
+using TravelChat.Server.Models;
+
 namespace TravelChat.Server
 {
     public class Program
@@ -6,19 +9,18 @@ namespace TravelChat.Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.Configure<WatsonCredentials>(builder.Configuration.GetSection("WatsonCredentials"));
+            builder.Services.AddScoped<ChatService>();
 
             var app = builder.Build();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
