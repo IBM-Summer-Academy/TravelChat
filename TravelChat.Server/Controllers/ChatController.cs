@@ -3,35 +3,28 @@ using Microsoft.AspNetCore.Mvc;
 namespace TravelChat.Server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class ChatController : ControllerBase
+    [Route("[controller]")]
+    public class ChatController : Controller
     {
-        private ChatService chatService;
-
-        public ChatController()
+        public ChatController(ILogger<ChatController> logger)
         {
-            chatService = new ChatService();
+            _logger = logger;
         }
 
-        [HttpPost]
-        public ActionResult<ChatResponse> Post([FromBody] ChatPrompt chatPrompt)
+        [HttpPost(nameof(SendMessage))]
+        public IActionResult SendMessage([FromBody] string message)
         {
-            ChatPrompt prompt;
-
-            try
-            {
-                prompt = chatService.Parse(chatPrompt);
-                Console.WriteLine(prompt);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest();
-            }
-
-            ChatResponse response = chatService.GetResponse(chatPrompt);
-            Console.WriteLine(response);
-
-            return Ok(response);
+            _logger.LogInformation("User sent message: {0}", message);
+            return Json(new { response = "Test response" });
         }
+
+        [HttpPost(nameof(RateResult))]
+        public IActionResult RateResult([FromQuery] byte rating)
+        {
+            _logger.LogInformation("User rated response with: {0}", rating);
+            return Ok();
+        }
+
+        private ILogger<ChatController> _logger;
     }
 }
