@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { MdModeOfTravel } from "react-icons/md";
+import { AiFillAliwangwang } from "react-icons/ai";
 
 function Navbar() {
     return (
         <>
             <SNav>
-             <MdModeOfTravel></MdModeOfTravel>
+                <SIcon></SIcon>
                 <Sbutton onClick={window.location.reload}>New Conversation</Sbutton>
             </SNav>
             
@@ -43,5 +43,9 @@ const Sbutton = styled(Link)`
         background-color: #0D1B1A;
     }
 `
-
+const SIcon = styled(AiFillAliwangwang)`
+   padding: 0.2rem 1rem;
+   position:absolute;
+   font-size: 2.7rem;
+`
 export default Navbar
