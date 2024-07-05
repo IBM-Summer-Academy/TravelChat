@@ -54,8 +54,10 @@ const Sbutton = styled(Link)`
     }
 `
 const SIcon = styled(AiFillAliwangwang)`
-   padding: 0.2rem 1rem;
-   position:absolute;
-   font-size: 2.7rem;
+font-size: 2rem;
+margin-right: 1rem;
+color: #0077CC;
+margin-top: 0.3rem;
+margin-bottom: 0.3rem;
 `
 export default Navbar
