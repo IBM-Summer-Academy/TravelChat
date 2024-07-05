@@ -12,6 +12,7 @@ namespace TravelChat.Server.Controllers
             _chatService = chatService;
         }
 
+
         [HttpPost(nameof(SendMessage))]
         public IActionResult SendMessage([FromBody] string message)
         {
