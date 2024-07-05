@@ -15,7 +15,16 @@ namespace TravelChat.Server.Controllers
         [HttpPost(nameof(SendMessage))]
         public IActionResult SendMessage([FromBody] string message)
         {
-            return Json(new { response = "Test response" });
+            try
+            {
+                var response = _chatService.Message(message);
+                _logger.LogInformation(response);
+                return Json(new { response });
+            }
+            catch (InvalidOperationException) 
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost(nameof(RateResult))]

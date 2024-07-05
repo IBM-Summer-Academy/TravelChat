@@ -1,3 +1,4 @@
+using IBM.Watson.Assistant.v2;
 using TravelChat.Server.Controllers;
 using TravelChat.Server.Models;
 
@@ -14,7 +15,7 @@ namespace TravelChat.Server
             builder.Services.AddSwaggerGen();
 
             builder.Services.Configure<WatsonCredentials>(builder.Configuration.GetSection("WatsonCredentials"));
-            builder.Services.AddScoped<ChatService>();
+            builder.Services.AddSingleton<ChatService>();
 
             var app = builder.Build();
 

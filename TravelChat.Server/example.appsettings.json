@@ -8,6 +8,7 @@
     "AllowedHosts": "*",
     "WatsonCredentials": {
         "Key": "",
-        "Url": ""
+        "Url": "",
+        "AssistantId": ""
     }
 }
