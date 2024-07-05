@@ -1,17 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { MdModeOfTravel } from "react-icons/md";
+import { AiFillAliwangwang } from "react-icons/ai";
 
 function Navbar() {
     return (
         <>
             <SNav>
                 <h1>TravelChat</h1>
-                <Icon />
+                <SIcon></SIcon>
                 <Sbutton onClick={window.location.reload}>New Conversation</Sbutton>
             </SNav>
-
+            
         </>
     )
 
@@ -53,13 +53,11 @@ const Sbutton = styled(Link)`
         background-color: #0D1B1A;
     }
 `
-
-const Icon = styled(MdModeOfTravel)`
-    font-size: 2rem;
-    margin-right: 1rem;
-    color: #0077CC;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
+const SIcon = styled(AiFillAliwangwang)`
+font-size: 2rem;
+margin-right: 1rem;
+color: #0077CC;
+margin-top: 0.3rem;
+margin-bottom: 0.3rem;
 `
-
 export default Navbar
