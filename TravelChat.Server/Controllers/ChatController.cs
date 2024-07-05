@@ -17,7 +17,7 @@ namespace TravelChat.Server.Controllers
         /// Creates a new chat session
         /// </summary>
         /// <returns>The id to new session</returns>
-        /// <response code="201">Returns the new session id</response>
+        /// <response code="201">Returns the newly created session id</response>
         /// <response code="500">Returns a message saying what went wrong</response>
         [HttpPost(nameof(CreateSession))]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -36,12 +36,21 @@ namespace TravelChat.Server.Controllers
         }
 
 
+        /// <summary>
+        /// Sends a message to the assistant api
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns>The assistant's response</returns>
+        /// <response code="200">Returns the assistant's response text</response>
+        /// <response code="404"></response>
         [HttpPost(nameof(SendMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult SendMessage([FromBody]ChatMessage message)
         {
             try
             {
-                var response = _chatService.Message(message.Content, message.SessionId);
+                var response = _chatService.Message(message);
                 _logger.LogInformation(response);
                 return Json(new { response });
             }
