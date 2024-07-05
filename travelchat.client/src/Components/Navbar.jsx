@@ -7,6 +7,7 @@ function Navbar() {
     return (
         <>
             <SNav>
+                <h1>TravelChat</h1>
                 <SIcon></SIcon>
                 <Sbutton onClick={window.location.reload}>New Conversation</Sbutton>
             </SNav>
@@ -23,6 +24,15 @@ const SNav = styled.div`
     background-color: #E2F1FE;
     margin: 0rem 0.0rem;
     margin-bottom: 1.5rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+
+    h1 {
+        font-size: 1.5rem;
+        color: #0077CC;
+        margin-top: 0.3rem;
+        margin-bottom: 0.3rem;
+    }
 `
 
 const Sbutton = styled(Link)`
