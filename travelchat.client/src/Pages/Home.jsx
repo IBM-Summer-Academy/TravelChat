@@ -1,9 +1,10 @@
 import React from 'react'
+import BottomBar from '../Components/BottomBar'
 
 function Home() {
     return (
         <>
-            <h1>Home</h1>
+            <BottomBar />
         </>
     )
 }
