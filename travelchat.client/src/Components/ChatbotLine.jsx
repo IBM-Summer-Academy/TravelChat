@@ -5,67 +5,72 @@ import { IoMdThumbsDown } from "react-icons/io";
 import { IoMdThumbsUp } from "react-icons/io";
 
 
-function ChatbotLine  ({ chatbotLine }) {
-    const [activeIcon, setActiveIcon] = useState(null);
+function ChatbotLine({ chatbotLine }) {
+  const [activeIcon, setActiveIcon] = useState(false);
 
-    const handleIconClick = (icon) => {
+  const handleIconClick = (icon) => {
 
-      if (activeIcon === icon) {
-        setActiveIcon(null); // Clicking the active icon again toggles it off
-       
-      } else {
-        setActiveIcon(icon); // Clicking a different icon sets it as active
+    if (activeIcon === icon) {
+      setActiveIcon(null);
+    }
+
+    else {
+      setActiveIcon(icon);
+    }
+
+    if (icon === 'thumbsDown') {
+      sendUserEvaluation(0)
+
+    }
+    else {
+      sendUserEvaluation(1)
+    }
+  };
+
+  const sendUserEvaluation = async (value) => {
+    try {
+      const response = await fetch('http://localhost:5046/Chat/RateResult', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(value),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send result');
       }
 
-      if(icon === 'thumbsDown') {
-        sendUserEvaluation(0)
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Failed to send number value:', error);
+      return { error: 'Failed to send number value' };
+    }
+  };
 
-      } else {
-        sendUserEvaluation(1)
-      }
-    };
+  return (
+    <>
+      <ChatbotIconContainer>
+        <SIconLogo />
+        <ChatbotElContainer>
+          <Fragment>
+            <div>{chatbotLine}</div>
+          </Fragment>
+          <SIconThumbsD
+            active={activeIcon === 'thumbsDown'}
+            onClick={() => handleIconClick('thumbsDown')}
+          />
+          <SIconThumbsU
+            active={activeIcon === 'thumbsUp'}
+            onClick={() => handleIconClick('thumbsUp')}
+          />
+        </ChatbotElContainer>
+      </ChatbotIconContainer>
 
-    const sendUserEvaluation = async (value) => {
-      try {
-        const response = await fetch('http://localhost:5046/Chat/RateResult', { 
-          method: 'POST',
-          body: JSON.stringify( value ), // Send the value as JSON
-        });
-    
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-    
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error('Failed to send number value:', error);
-        return { error: 'Failed to send number value' };
-      }
-    };
 
-  return(    
-  <React.Fragment >
-    <ChatbotIconContainer>
-    <SIconLogo></SIconLogo>
-    <ChatbotElContainer>
-      <Fragment>
-        <div>{chatbotLine}</div>
-      </Fragment>
-      <SIconThumbsD
-        active={activeIcon === 'thumbsDown'}
-        onClick={() => handleIconClick('thumbsDown')}
-      />
-      <SIconThumbsU
-        active={activeIcon === 'thumbsUp'}
-        onClick={() => handleIconClick('thumbsUp')}
-      />
- </ChatbotElContainer>
-    </ChatbotIconContainer>
-    
-    
-</React.Fragment>
-);
+    </>
+  );
 };
 
 const ChatbotIconContainer = styled.div`
