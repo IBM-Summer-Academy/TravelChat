@@ -1,4 +1,5 @@
 using IBM.Watson.Assistant.v2;
+using System.Reflection;
 using TravelChat.Server.Controllers;
 using TravelChat.Server.Models;
 
@@ -12,7 +13,11 @@ namespace TravelChat.Server
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+            });
 
             builder.Services.Configure<WatsonCredentials>(builder.Configuration.GetSection("WatsonCredentials"));
             builder.Services.AddSingleton<ChatService>();
