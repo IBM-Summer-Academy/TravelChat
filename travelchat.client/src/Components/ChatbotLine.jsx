@@ -9,10 +9,38 @@ function ChatbotLine  ({ chatbotLine }) {
     const [activeIcon, setActiveIcon] = useState(null);
 
     const handleIconClick = (icon) => {
+
       if (activeIcon === icon) {
         setActiveIcon(null); // Clicking the active icon again toggles it off
+       
       } else {
         setActiveIcon(icon); // Clicking a different icon sets it as active
+      }
+
+      if(icon === 'thumbsDown') {
+        sendUserEvaluation(0)
+
+      } else {
+        sendUserEvaluation(1)
+      }
+    };
+
+    const sendUserEvaluation = async (value) => {
+      try {
+        const response = await fetch('http://localhost:5046/Chat/RateResult', { 
+          method: 'POST',
+          body: JSON.stringify( value ), // Send the value as JSON
+        });
+    
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Failed to send number value:', error);
+        return { error: 'Failed to send number value' };
       }
     };
 
@@ -42,14 +70,16 @@ function ChatbotLine  ({ chatbotLine }) {
 
 const ChatbotIconContainer = styled.div`
   display: flex;
-  justify-content: row;
-  padding-left: 0.35rem;
+  padding: 0.5rem;
+  margin-bottom: 1.2rem
 `;
 const ChatbotElContainer = styled.div`
+ padding: 0.75rem;
   background-color: #F0F1FF;
   border-radius: 1rem; 
-  width: 25rem;
   height: fit-content;
+    max-width: 50%;
+  flex-wrap: wrap;
 `
 
 const SIconThumbsD = styled(IoMdThumbsDown)`

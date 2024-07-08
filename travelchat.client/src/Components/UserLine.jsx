@@ -12,7 +12,13 @@ const SUserLineContainer = styled.div
 ` background-color: #AFDAFB;
   border-radius: 1rem;
   margin-right: 0.3rem;
-  width: 25rem;
   height: fit-content;
+  padding: 0.5rem;
+  display: flex;
+  align-self: flex-end;
+    max-width: 50%;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+
 `
 export default UserLine;

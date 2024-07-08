@@ -35,15 +35,23 @@ function Conversation({ userLine }) {
   }; 
 
    return(<>
-    <div>
+    <SConverstaion>
       {conversation.map((item, index) => (
         <React.Fragment key={index}>
              <UserLine userLine={item?.userQuestion}/>
             <ChatbotLine chatbotLine={item?.chatBotAnswer}/>
         </React.Fragment>
       ))}
-    </div>
+    </SConverstaion>
         </>
     )
 }
+
+const SConverstaion = styled.div
+` display: flex;
+flex-direction: column;
+width: 100%;
+height: 75%;
+
+`
 export default Conversation;
