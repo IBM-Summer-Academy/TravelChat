@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import styled from 'styled-components'
 import UserLine from './UserLine';
 import ChatbotLine from './ChatbotLine.jsx';
 
@@ -38,8 +38,8 @@ function Conversation({ userLine }) {
     <div>
       {conversation.map((item, index) => (
         <React.Fragment key={index}>
-          <UserLine userLine={item?.userQuestion} className="user-line" />
-          <ChatbotLine chatbotLine={item?.chatBotAnswer} className="chat-bot-line" />
+             <UserLine userLine={item?.userQuestion}/>
+            <ChatbotLine chatbotLine={item?.chatBotAnswer}/>
         </React.Fragment>
       ))}
     </div>
