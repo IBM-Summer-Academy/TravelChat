@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react';
 import styled from 'styled-components'
 import { IoSend } from "react-icons/io5";
 
-function BottomBar() {
-    
+const BottomBar = ({ onSendUserQuestion }) => {
+    const [userQuestion, setUserQuestion] = useState('');
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      onSendUserQuestion(userQuestion); 
+      setUserQuestion(''); 
+    };
+  
+    const handleChange = (e) => {
+      setUserQuestion(e.target.value);
+    };
     
     return (
         <>
             <SBottomBar>
-                <form>
-                    <input type="text" placeholder="Enter your message" />
+                <form  onSubmit={handleSubmit}>
+                    <input type="text" placeholder="Enter your message"  name="userQuestion"
+                    value={userQuestion}
+                    onChange={(e) => setUserQuestion(e.target.value)}/>
                     <button type="submit"><IoSend /></button>
                 </form>
             </SBottomBar>
