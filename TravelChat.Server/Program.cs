@@ -38,7 +38,6 @@ namespace TravelChat.Server
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.MapFallbackToFile("/index.html");
