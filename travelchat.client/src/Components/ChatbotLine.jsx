@@ -89,7 +89,7 @@ const ChatbotElContainer = styled.div`
 
 const SIconThumbsD = styled(IoMdThumbsDown)`
   font-size: 24px;
-  color: ${props => props.active ? '#00bcd4' : '#ccc'};
+  color: ${props => props.active ? '#f44336' : '#ccc'};
   margin-right: 8px;
   cursor: pointer;
 `;
@@ -97,7 +97,7 @@ const SIconThumbsD = styled(IoMdThumbsDown)`
 const SIconThumbsU = styled(IoMdThumbsUp)`
   width: 24px;
   height: 24px;
-  color: ${props => props.active ? '#f44336' : '#ccc'};
+  color: ${props => props.active ? '#00bcd4' : '#ccc'};
   background-color:none;
   margin-right: 8px;
   cursor: pointer;
