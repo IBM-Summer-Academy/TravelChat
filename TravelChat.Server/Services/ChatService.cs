@@ -1,19 +1,24 @@
 using IBM.Cloud.SDK.Core.Authentication.Iam;
+using IBM.Cloud.SDK.Core.Http;
 using IBM.Watson.Assistant.v2;
 using IBM.Watson.Assistant.v2.Model;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.Options;
+using System.Text;
+using System.Text.Json;
 using TravelChat.Server.Models;
 
 namespace TravelChat.Server.Controllers
 {
     public class ChatService
     {
-        public ChatService(IOptions<WatsonCredentials> watsonCredentials, ILogger<ChatService> logger)
+        public ChatService(IOptions<WatsonCredentials> watsonCredentials, IOptions<WeatherCredentials> weatherCredentials, ILogger<ChatService> logger)
         {
             _watsonCredentials = watsonCredentials.Value;
+            _weatherCredentials = weatherCredentials.Value;
             _logger = logger;
             _authenticator = new IamAuthenticator(apikey: _watsonCredentials.Key);
-            _assistantService = new AssistantService("2024-07-05", _authenticator);
+            _assistantService = new AssistantService("2024-07-09", _authenticator);
             _assistantService.SetServiceUrl(_watsonCredentials.Url);
         }
 
@@ -47,10 +52,72 @@ namespace TravelChat.Server.Controllers
 
             _logger.LogInformation(response.Response);
             RuntimeResponseGeneric genericResponse = response.Result.Output.Generic.First();
+            if (CheckEnd(genericResponse.Text))
+            {
+                return AddWeatherData(sharedClient, genericResponse.Text).Result;
+            }
             return genericResponse.Text;
+        }
+        private bool CheckEnd(string message)
+        {
+            if (message.Substring(message.Length - 3) == "END") return true;
+            return false;
+        }
+
+        private readonly HttpClient sharedClient = new()
+        {
+            BaseAddress = new Uri("http://api.weatherapi.com/v1/"),
+        };
+
+        async Task<string> GetTemp(HttpClient httpClient, string location)
+        {
+            using HttpResponseMessage response = await httpClient.GetAsync($"current.json?key={_weatherCredentials.Key}&q={location}&aqi=no");
+
+            response.EnsureSuccessStatusCode();
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            using JsonDocument doc = JsonDocument.Parse(jsonResponse);
+            JsonElement root = doc.RootElement;
+
+            // Access the specific parts of the JSON
+            double temperature = root.GetProperty("current").GetProperty("temp_c").GetDouble();
+            string condition = root.GetProperty("current").GetProperty("condition").GetProperty("text").GetString();
+
+            return $"({temperature}°C, {condition})";
+        }
+
+        async Task<string> AddWeatherData(HttpClient client, string text)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            string[] lines = text.Split("\n",StringSplitOptions.RemoveEmptyEntries);
+
+            string line = lines[0];
+            string[] citites = line.Split(", ");
+
+            string[] weatherData = new string[citites.Length];
+
+            for (int i = 0; i < citites.Length; i++)
+            {
+                weatherData[i] = await GetTemp(client, citites[i]);
+            }
+
+            for (int i = 1; i < 6; i++)
+            {
+                if (i > 1) builder.Append("\n");
+
+                string currLine = lines[i];
+                currLine = currLine.Replace(citites[i - 1], citites[i - 1] + " " + weatherData[i - 1]);
+
+                builder.Append(currLine);
+            }
+
+            return builder.ToString();
         }
 
         private readonly WatsonCredentials _watsonCredentials;
+        private readonly WeatherCredentials _weatherCredentials;
         private readonly IamAuthenticator _authenticator;
         private readonly AssistantService _assistantService;
         private readonly ILogger<ChatService> _logger;

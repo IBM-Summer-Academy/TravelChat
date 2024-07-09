@@ -20,6 +20,7 @@ namespace TravelChat.Server
             });
 
             builder.Services.Configure<WatsonCredentials>(builder.Configuration.GetSection("WatsonCredentials"));
+            builder.Services.Configure<WeatherCredentials>(builder.Configuration.GetSection("WeatherCredentials"));
             builder.Services.AddSingleton<ChatService>();
 
             var app = builder.Build();
