@@ -1,3 +1,8 @@
+using IBM.Watson.Assistant.v2;
+using System.Reflection;
+using TravelChat.Server.Controllers;
+using TravelChat.Server.Models;
+
 namespace TravelChat.Server
 {
     public class Program
@@ -6,19 +11,22 @@ namespace TravelChat.Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+            });
+
+            builder.Services.Configure<WatsonCredentials>(builder.Configuration.GetSection("WatsonCredentials"));
+            builder.Services.AddSingleton<ChatService>();
 
             var app = builder.Build();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
