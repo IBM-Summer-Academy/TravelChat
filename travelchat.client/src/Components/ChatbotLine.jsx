@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { AiFillAliwangwang } from "react-icons/ai";
 import { IoMdThumbsDown } from "react-icons/io";
@@ -7,6 +7,8 @@ import { IoMdThumbsUp } from "react-icons/io";
 
 function ChatbotLine({ chatbotLine }) {
   const [activeIcon, setActiveIcon] = useState(false);
+
+  useEffect(() => { }, [chatbotLine]);
 
   const handleIconClick = (icon) => {
 
@@ -19,17 +21,17 @@ function ChatbotLine({ chatbotLine }) {
     }
 
     if (icon === 'thumbsDown') {
-      sendUserEvaluation(0)
+      sendUserEvaluation(0);
 
     }
     else {
-      sendUserEvaluation(1)
+      sendUserEvaluation(1);
     }
   };
 
   const sendUserEvaluation = async (value) => {
     try {
-      const response = await fetch('http://localhost:5046/Chat/RateResult', {
+      const response = await fetch('/chat/RateResult', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,10 +42,8 @@ function ChatbotLine({ chatbotLine }) {
       if (!response.ok) {
         throw new Error('Failed to send result');
       }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to send number value:', error);
       return { error: 'Failed to send number value' };
     }

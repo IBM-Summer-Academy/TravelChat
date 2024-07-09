@@ -46,7 +46,15 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/weatherforecast': {
+            '^/chat/CreateSession': {
+                target: 'https://localhost:7004/',
+                secure: false
+            },
+            '^/chat/RateResult': {
+                target: 'https://localhost:7004/',
+                secure: false
+            },
+            '^/chat/SendMessage': {
                 target: 'https://localhost:7004/',
                 secure: false
             }
