@@ -11,14 +11,18 @@ function UserLine({ userLine }) {
 const SUserLineContainer = styled.div` 
   background-color: #AFDAFB;
   border-radius: 1rem;
-  margin-right: 0.3rem;
+  margin-right: 1rem;
   height: fit-content;
   padding: 1rem;
   display: flex;
   align-self: flex-end;
-  max-width: 40%;
-  flex-wrap: wrap;
+  max-width: 40rem;
   margin-bottom: 1rem;
-  overflow-wrap: break-word;
+  overflow-y: hidden;
+
+  div {
+    overflow-y: hidden;
+    overflow-wrap: break-word;
+  }
 `
 export default UserLine;
