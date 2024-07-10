@@ -54,7 +54,11 @@ function Home() {
     setChatbotAnswer(data.content);
   }
 
-  useEffect(() => { }, [chatbotAnswer && userQuestion]);
+ useEffect(() => { }, [chatbotAnswer && userQuestion]);
+
+ useEffect(() => {
+    handleUserQuestion(examplePrompt);
+ }, []);
 
   return (
     <>
