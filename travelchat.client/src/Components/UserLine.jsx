@@ -1,24 +1,24 @@
 import React from 'react';
 import styled from 'styled-components'
-function UserLine ({ userLine }) {
-  return(
+function UserLine({ userLine }) {
+  return (
     <SUserLineContainer>
-       <div>{userLine}</div>
+      <div>{userLine}</div>
     </SUserLineContainer>
-   
-  ); 
+
+  );
 };
-const SUserLineContainer = styled.div
-` background-color: #AFDAFB;
+const SUserLineContainer = styled.div` 
+  background-color: #AFDAFB;
   border-radius: 1rem;
   margin-right: 0.3rem;
   height: fit-content;
-  padding: 0.5rem;
+  padding: 1rem;
   display: flex;
   align-self: flex-end;
-    max-width: 50%;
+  max-width: 40%;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-
+  overflow-wrap: break-word;
 `
 export default UserLine;

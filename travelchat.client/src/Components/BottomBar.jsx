@@ -4,24 +4,24 @@ import { IoSend } from "react-icons/io5";
 
 const BottomBar = ({ onSendUserQuestion }) => {
     const [userQuestion, setUserQuestion] = useState('');
-  
+
     const handleSubmit = (event) => {
-      event.preventDefault();
-      onSendUserQuestion(userQuestion); 
-      setUserQuestion(''); 
+        event.preventDefault();
+        onSendUserQuestion(userQuestion);
+        setUserQuestion('');
     };
-  
+
     const handleChange = (e) => {
-      setUserQuestion(e.target.value);
+        setUserQuestion(e.target.value);
     };
-    
+
     return (
         <>
             <SBottomBar>
-                <form  onSubmit={handleSubmit}>
-                    <input type="text" placeholder="Enter your message"  name="userQuestion"
-                    value={userQuestion}
-                    onChange={(e) => setUserQuestion(e.target.value)}/>
+                <form onSubmit={handleSubmit}>
+                    <input type="text" placeholder="Enter your message" name="userQuestion"
+                        value={userQuestion} autoComplete="off"
+                        onChange={(e) => setUserQuestion(e.target.value)} />
                     <button type="submit"><IoSend /></button>
                 </form>
             </SBottomBar>
