@@ -10,7 +10,7 @@ function Conversation({ userLine, chatbotAnswer }) {
     if (!userLine || !chatbotAnswer) return;
 
     setConversation(prevConversation => [...prevConversation, { userQuestion: userLine, chatBotAnswer: chatbotAnswer }]);
-  }, [userLine, chatbotAnswer]);
+  }, [userLine && chatbotAnswer]);
 
   return (
     <>

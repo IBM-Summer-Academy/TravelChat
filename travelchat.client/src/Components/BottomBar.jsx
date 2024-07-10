@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { IoSend } from "react-icons/io5";
 
 const BottomBar = ({ onSendUserQuestion }) => {
     const [userQuestion, setUserQuestion] = useState('');
+
+    useEffect(() => { }, [userQuestion]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
