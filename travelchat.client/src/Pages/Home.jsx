@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BottomBar from '../Components/BottomBar'
 import Conversation from '../Components/Conversation'
+import styled from 'styled-components'
 
 function Home() {
   const [userQuestion, setUserQuestion] = useState('');
@@ -32,7 +33,7 @@ function Home() {
     }
 
     createSession();
-  }, []);
+  }, [sessionId]);
 
   const sendQuery = async (content) => {
 
@@ -53,16 +54,26 @@ function Home() {
     setChatbotAnswer(data.content);
   }
 
-  useEffect(() => { }, [chatbotAnswer]);
-
+  useEffect(() => { }, [chatbotAnswer, userQuestion]);
 
   return (
     <>
-      <Conversation userLine={userQuestion} chatbotAnswer={chatbotAnswer} />
-      <BottomBar onSendUserQuestion={handleUserQuestion} />
-
+      <WrapperS>
+        <Conversation userLine={userQuestion} chatbotAnswer={chatbotAnswer} />
+        <BottomBar onSendUserQuestion={handleUserQuestion} />
+      </WrapperS>
     </>
   )
 }
+
+const WrapperS = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  overflow-y: hidden;
+  
+`
 
 export default Home

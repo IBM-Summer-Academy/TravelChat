@@ -32,6 +32,6 @@ const SConverstaion = styled.div`
 display: flex;
 flex-direction: column;
 width: 100%;
-height: 75%;
+margin-bottom: 5rem;
 `
 export default Conversation;
