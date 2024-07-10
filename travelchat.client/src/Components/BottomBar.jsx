@@ -11,10 +11,6 @@ const BottomBar = ({ onSendUserQuestion }) => {
         setUserQuestion('');
     };
 
-    const handleChange = (e) => {
-        setUserQuestion(e.target.value);
-    };
-
     return (
         <>
             <SBottomBar>

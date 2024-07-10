@@ -33,7 +33,7 @@ function Home() {
     }
 
     createSession();
-  }, []);
+  }, [sessionId]);
 
   const sendQuery = async (content) => {
 
@@ -54,8 +54,7 @@ function Home() {
     setChatbotAnswer(data.content);
   }
 
-  useEffect(() => { }, [chatbotAnswer]);
-
+  useEffect(() => { }, [chatbotAnswer, userQuestion]);
 
   return (
     <>
